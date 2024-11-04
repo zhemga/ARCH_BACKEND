@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35309.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIRTUAL_LAB_API", "VIRTUAL_LAB_API.csproj", "{C28C6340-4B7B-4216-A009-ABA124924C0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C28C6340-4B7B-4216-A009-ABA124924C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28C6340-4B7B-4216-A009-ABA124924C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28C6340-4B7B-4216-A009-ABA124924C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28C6340-4B7B-4216-A009-ABA124924C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2C6E5DF-CACE-4C4F-8C9D-8AA4BD8AA35A}
+	EndGlobalSection
+EndGlobal
