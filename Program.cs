@@ -50,19 +50,13 @@ app.MapDegreeEndpoints();
 
 app.MapDegreeNameEndpoints();
 
-app.MapEducationalMaterialEndpoints();
-
 app.MapSpecialtyEndpoints();
 
 app.MapStudentEndpoints();
 
 app.MapStudentCourseStatisticEndpoints();
 
-app.MapStudentTaskAttemptEndpoints();
-
 app.MapStudentTaskStatisticEndpoints();
-
-app.MapTaskEndpoints();
 
 app.MapTeacherEndpoints();
 
@@ -73,6 +67,12 @@ app.MapUserRoleEndpoints();
 app.MapStudentDegreeEndpoints();
 
 app.MapTeacherDegreeEndpoints();
+
+app.MapEducationalMaterialEndpoints();
+
+app.MapStudentTaskAttemptEndpoints();
+
+app.MapTaskEndpoints();
 
 app.Run();
 

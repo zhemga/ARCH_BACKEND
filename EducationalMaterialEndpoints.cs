@@ -38,6 +38,7 @@ public static class EducationalMaterialEndpoints
                     .SetProperty(m => m.Name, educationalMaterial.Name)
                     .SetProperty(m => m.Description, educationalMaterial.Description)
                     .SetProperty(m => m.CloudDriveAttachedFileURLs, educationalMaterial.CloudDriveAttachedFileURLs)
+                    .SetProperty(m => m.CourseId, educationalMaterial.CourseId)
                     );
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })

@@ -40,6 +40,7 @@ public static class TaskEndpoints
                     .SetProperty(m => m.Description, task.Description)
                     .SetProperty(m => m.DataJSON, task.DataJSON)
                     .SetProperty(m => m.MaxAttempts, task.MaxAttempts)
+                    .SetProperty(m => m.CourseId, task.CourseId)
                     );
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })

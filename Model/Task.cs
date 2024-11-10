@@ -12,6 +12,9 @@ namespace VIRTUAL_LAB_API.Model
         public string DataJSON { get; set; }
         public int MaxAttempts { get; set; }
 
+
+        [ForeignKey(nameof(Course))]
+        public int CourseId { get; set; }
         public Course Course { get; set; }
         public List<StudentTaskAttempt> StudentTaskAttempts { get; set; }
 

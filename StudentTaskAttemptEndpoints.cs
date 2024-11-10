@@ -40,6 +40,8 @@ public static class StudentTaskAttemptEndpoints
                     .SetProperty(m => m.Rate, studentTaskAttempt.Rate)
                     .SetProperty(m => m.IsSuccessful, studentTaskAttempt.IsSuccessful)
                     .SetProperty(m => m.AttemptDate, studentTaskAttempt.AttemptDate)
+                    .SetProperty(m => m.TaskId, studentTaskAttempt.TaskId)
+                    .SetProperty(m => m.StudentId, studentTaskAttempt.StudentId)
                     );
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })

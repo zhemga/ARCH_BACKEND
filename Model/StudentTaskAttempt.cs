@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VIRTUAL_LAB_API.Model
 {
@@ -12,7 +13,12 @@ namespace VIRTUAL_LAB_API.Model
         public bool IsSuccessful { get; set; }
         public DateTime AttemptDate { get; set; }
 
+        [ForeignKey(nameof(Task))]
+        public int TaskId { get; set; }
         public Task Task { get; set; }
+
+        [ForeignKey(nameof(Student))]
+        public int StudentId { get; set; }
         public Student Student { get; set; }
 
         //public UserTaskAttempt(int number, int studentDataJSON, double rate, bool isSuccessful, DateTime AttemptDate, Student student, Task task) { }
