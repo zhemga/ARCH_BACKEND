@@ -42,6 +42,7 @@ public static class UserEndpoints
                     .SetProperty(m => m.Phone, user.Phone)
                     .SetProperty(m => m.HashPassword, user.HashPassword)
                     .SetProperty(m => m.BirthDate, user.BirthDate)
+                    .SetProperty(m => m.UserRoleId, user.UserRoleId)
                     );
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })

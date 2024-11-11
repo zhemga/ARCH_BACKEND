@@ -5,6 +5,8 @@ namespace VIRTUAL_LAB_API.Model
 {
     public class StudentTaskAttempt
     {
+        [ScaffoldColumn(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Number { get; set; }
         [MaxLength(20000)]

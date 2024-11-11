@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using VIRTUAL_LAB_API.Data;
 using VIRTUAL_LAB_API.Model;
+using Task = VIRTUAL_LAB_API.Model.Task;
 namespace VIRTUAL_LAB_API;
 
 public static class CourseEndpoints
 {
-    public static void MapCourseEndpoints (this IEndpointRouteBuilder routes)
+    public static void MapCourseEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Course").WithTags(nameof(Course));
 
@@ -29,6 +30,18 @@ public static class CourseEndpoints
         .WithName("GetCourseById")
         .WithOpenApi();
 
+        group.MapGet("GetTasksByCourseId/{id}", async Task<Results<Ok<List<Task>>, NotFound>> (int id, VIRTUAL_LAB_APIContext db) =>
+        {
+            return await db.Task.AsNoTracking()
+                .Where(model => model.CourseId == id)
+                .ToListAsync()
+                is List<Task> model
+                    ? TypedResults.Ok(model)
+                    : TypedResults.NotFound();
+        })
+        .WithName("GetTasksByCourseId")
+        .WithOpenApi();
+
         group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Course course, VIRTUAL_LAB_APIContext db) =>
         {
             var affected = await db.Course
@@ -47,7 +60,7 @@ public static class CourseEndpoints
         {
             db.Course.Add(course);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/Course/{course.Id}",course);
+            return TypedResults.Created($"/api/Course/{course.Id}", course);
         })
         .WithName("CreateCourse")
         .WithOpenApi();

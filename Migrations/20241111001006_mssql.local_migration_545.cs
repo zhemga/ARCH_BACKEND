@@ -6,17 +6,46 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VIRTUAL_LAB_API.Migrations
 {
     /// <inheritdoc />
-    public partial class mssqllocal_migration_540 : Migration
+    public partial class mssqllocal_migration_545 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_CourseNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_DegreeNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_EducationalMaterialNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_SpecialtyNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_StudentCourseStatisticNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_StudentTaskAttemptNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_StudentTaskStatisticNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_TaskNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_UserNumbers");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "SQ_UserRoleNumbers");
+
             migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_CourseNumbers"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -42,8 +71,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "Specialty",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_SpecialtyNumbers"),
                     Name = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -55,8 +83,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "UserRole",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_UserRoleNumbers"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -68,8 +95,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "EducationalMaterial",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_EducationalMaterialNumbers"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CloudDriveAttachedFileURLs = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -90,8 +116,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "Task",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_TaskNumbers"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataJSON = table.Column<string>(type: "nvarchar(max)", maxLength: 20000, nullable: false),
@@ -113,8 +138,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "Degree",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_DegreeNumbers"),
                     AdmissionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GraduationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DegreeNameId = table.Column<int>(type: "int", nullable: false),
@@ -142,8 +166,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_UserNumbers"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -217,8 +240,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "StudentCourseStatistic",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_StudentCourseStatisticNumbers"),
                     MarkRate = table.Column<double>(type: "float", nullable: false),
                     TimeRate = table.Column<double>(type: "float", nullable: false),
                     GeneralCourseRate = table.Column<double>(type: "float", nullable: false),
@@ -271,8 +293,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "StudentTaskAttempt",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_StudentTaskAttemptNumbers"),
                     Number = table.Column<int>(type: "int", nullable: false),
                     StudentDataJSON = table.Column<string>(type: "nvarchar(max)", maxLength: 20000, nullable: false),
                     Rate = table.Column<double>(type: "float", nullable: false),
@@ -302,8 +323,7 @@ namespace VIRTUAL_LAB_API.Migrations
                 name: "StudentTaskStatistic",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR SQ_StudentTaskStatisticNumbers"),
                     MarkRate = table.Column<double>(type: "float", nullable: false),
                     TimeRate = table.Column<double>(type: "float", nullable: false),
                     GeneralCourseRate = table.Column<double>(type: "float", nullable: false),
@@ -474,6 +494,36 @@ namespace VIRTUAL_LAB_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRole");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_CourseNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_DegreeNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_EducationalMaterialNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_SpecialtyNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_StudentCourseStatisticNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_StudentTaskAttemptNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_StudentTaskStatisticNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_TaskNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_UserNumbers");
+
+            migrationBuilder.DropSequence(
+                name: "SQ_UserRoleNumbers");
         }
     }
 }

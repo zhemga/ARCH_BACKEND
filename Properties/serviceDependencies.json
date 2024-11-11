@@ -1,8 +1,12 @@
 {
   "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:VIRTUAL_LAB_APIContext"
+      "connectionId": "ConnectionStrings:VIRTUAL_LAB_APIContext",
+      "dynamicId": null
     }
   }
 }

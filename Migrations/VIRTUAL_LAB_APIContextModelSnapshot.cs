@@ -22,6 +22,26 @@ namespace VIRTUAL_LAB_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("SQ_CourseNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_DegreeNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_EducationalMaterialNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_SpecialtyNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_StudentCourseStatisticNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_StudentTaskAttemptNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_StudentTaskStatisticNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_TaskNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_UserNumbers");
+
+            modelBuilder.HasSequence<int>("SQ_UserRoleNumbers");
+
             modelBuilder.Entity("CourseStudent", b =>
                 {
                     b.Property<int>("CoursesId")
@@ -86,9 +106,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_CourseNumbers");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -107,9 +126,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_DegreeNumbers");
 
                     b.Property<DateTime>("AdmissionDate")
                         .HasColumnType("datetime2");
@@ -162,9 +180,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_EducationalMaterialNumbers");
 
                     b.Property<string>("CloudDriveAttachedFileURLs")
                         .IsRequired()
@@ -192,9 +209,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_SpecialtyNumbers");
 
                     b.Property<int>("Name")
                         .HasColumnType("int");
@@ -208,9 +224,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_StudentCourseStatisticNumbers");
 
                     b.Property<double>("CompletionRate")
                         .HasColumnType("float");
@@ -243,9 +258,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_StudentTaskAttemptNumbers");
 
                     b.Property<DateTime>("AttemptDate")
                         .HasColumnType("datetime2");
@@ -283,9 +297,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_StudentTaskStatisticNumbers");
 
                     b.Property<double>("GeneralCourseRate")
                         .HasColumnType("float");
@@ -315,9 +328,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_TaskNumbers");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -349,9 +361,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_UserNumbers");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
@@ -403,9 +414,8 @@ namespace VIRTUAL_LAB_API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR SQ_UserRoleNumbers");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -612,7 +622,7 @@ namespace VIRTUAL_LAB_API.Migrations
             modelBuilder.Entity("VIRTUAL_LAB_API.Model.User", b =>
                 {
                     b.HasOne("VIRTUAL_LAB_API.Model.UserRole", "UserRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("UserRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -630,6 +640,11 @@ namespace VIRTUAL_LAB_API.Migrations
             modelBuilder.Entity("VIRTUAL_LAB_API.Model.Task", b =>
                 {
                     b.Navigation("StudentTaskAttempts");
+                });
+
+            modelBuilder.Entity("VIRTUAL_LAB_API.Model.UserRole", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("VIRTUAL_LAB_API.Model.Student", b =>
