@@ -2,8 +2,8 @@
 {
     public class Teacher : User
     {
-        public List<TeacherDegree> TeacherDegree { get; private set; }
-        public List<Course> Courses { get; private set; }
+        public virtual List<TeacherDegree> TeacherDegree { get; private set; }
+        public virtual List<Course> Courses { get; private set; }
 
         //public Course CreateCourse(Course course) { }
         //public Student AssignStudentToCourse(Student student, Course course) { }

@@ -11,10 +11,10 @@ namespace VIRTUAL_LAB_API.Model
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public List<Teacher> Teachers { get; set; }
-        public List<Student> Students { get; private set; }
-        public List<EducationalMaterial> EducationalMaterials { get; private set; }
-        public List<Task> Tasks { get; private set; }
+        public virtual List<Teacher> Teachers { get; set; }
+        public virtual List<Student> Students { get; private set; }
+        public virtual List<EducationalMaterial> EducationalMaterials { get; private set; }
+        public virtual List<Task> Tasks { get; private set; }
 
     }
 }

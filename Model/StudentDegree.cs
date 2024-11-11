@@ -2,7 +2,7 @@
 {
     public class StudentDegree : Degree
     {
-        public List<Student> Students { get; private set; }
+        public virtual List<Student> Students { get; private set; }
 
         //public StudentDegree(Degree degree, Student student) { }
     }

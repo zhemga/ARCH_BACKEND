@@ -12,8 +12,8 @@ namespace VIRTUAL_LAB_API.Model
         public double TimeRate { get; set; }
         public double GeneralCourseRate { get; set; }
 
-        public Student Student { get; set; }
-        public Task Task { get; set; }
+        public virtual Student Student { get; set; }
+        public virtual Task Task { get; set; }
 
         //public StudentTaskStatistic(double MarkRate, double TimeRate, double GeneralCourseRate, Student Student, Student Course) { }
 

@@ -12,8 +12,12 @@ using Bogus.DataSets;
 using Bogus;
 using System.Diagnostics.Metrics;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<VIRTUAL_LAB_APIContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VIRTUAL_LAB_APIContext") ?? throw new InvalidOperationException("Connection string 'VIRTUAL_LAB_APIContext' not found.")));
+builder.Services.AddDbContext<VIRTUAL_LAB_APIContext>(
+    options =>
+    {
+        options.UseLazyLoadingProxies();
+        options.UseSqlServer(builder.Configuration.GetConnectionString("VIRTUAL_LAB_APIContext") ?? throw new InvalidOperationException("Connection string 'VIRTUAL_LAB_APIContext' not found."));
+    });
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,7 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<JsonOptions>(options =>
 {
-    options.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
 

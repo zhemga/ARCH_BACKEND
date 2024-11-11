@@ -12,8 +12,8 @@ namespace VIRTUAL_LAB_API.Model
         public DateTime AdmissionDate { get; set; }
         public DateTime GraduationDate { get; set; }
 
-        public DegreeName DegreeName { get; private set; }
-        public Specialty Specialty { get; private set; }
+        public virtual DegreeName DegreeName { get; private set; }
+        public virtual Specialty Specialty { get; private set; }
 
     }
 }

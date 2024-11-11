@@ -20,7 +20,7 @@ namespace VIRTUAL_LAB_API.Model
 
         [ForeignKey(nameof(UserRole))]
         public int UserRoleId { get; set; }
-        public UserRole UserRole { get; set; }
+        public virtual UserRole UserRole { get; set; }
 
         //public User(string name, string middleName, string surname, string email, string phone, DateTime birthDate, UserRole userRole) { }
 

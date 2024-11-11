@@ -17,11 +17,11 @@ namespace VIRTUAL_LAB_API.Model
 
         [ForeignKey(nameof(Task))]
         public int TaskId { get; set; }
-        public Task Task { get; set; }
+        public virtual Task Task { get; set; }
 
         [ForeignKey(nameof(Student))]
         public int StudentId { get; set; }
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
 
         //public UserTaskAttempt(int number, int studentDataJSON, double rate, bool isSuccessful, DateTime AttemptDate, Student student, Task task) { }
     }

@@ -2,7 +2,7 @@
 {
 public class TeacherDegree : Degree
 {
-    public List<Teacher> Teachers { get; private set; }
+    public virtual List<Teacher> Teachers { get; private set; }
 
 }
 }
