@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VIRTUAL_LAB_API.Migrations
 {
     /// <inheritdoc />
-    public partial class mssqllocal_migration_545 : Migration
+    public partial class mssqllocal_migration_387 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

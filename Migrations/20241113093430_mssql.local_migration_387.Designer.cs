@@ -12,8 +12,8 @@ using VIRTUAL_LAB_API.Data;
 namespace VIRTUAL_LAB_API.Migrations
 {
     [DbContext(typeof(VIRTUAL_LAB_APIContext))]
-    [Migration("20241111001006_mssql.local_migration_545")]
-    partial class mssqllocal_migration_545
+    [Migration("20241113093430_mssql.local_migration_387")]
+    partial class mssqllocal_migration_387
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace VIRTUAL_LAB_API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -563,7 +566,7 @@ namespace VIRTUAL_LAB_API.Migrations
                         .IsRequired();
 
                     b.HasOne("VIRTUAL_LAB_API.Model.Student", "Student")
-                        .WithMany()
+                        .WithMany("StudentCourseStatistics")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -595,7 +598,7 @@ namespace VIRTUAL_LAB_API.Migrations
             modelBuilder.Entity("VIRTUAL_LAB_API.Model.StudentTaskStatistic", b =>
                 {
                     b.HasOne("VIRTUAL_LAB_API.Model.Student", "Student")
-                        .WithMany()
+                        .WithMany("StudentTaskStatistics")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -652,7 +655,11 @@ namespace VIRTUAL_LAB_API.Migrations
 
             modelBuilder.Entity("VIRTUAL_LAB_API.Model.Student", b =>
                 {
+                    b.Navigation("StudentCourseStatistics");
+
                     b.Navigation("StudentTaskAttempts");
+
+                    b.Navigation("StudentTaskStatistics");
                 });
 #pragma warning restore 612, 618
         }
