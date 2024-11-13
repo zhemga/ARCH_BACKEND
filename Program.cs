@@ -142,31 +142,40 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
-    //{
-    //    var courses = dbContext.Course.ToList();
-    //    var students = dbContext.Student.ToList();
-    //    var teachers = dbContext.Teacher.ToList();
-    //    var items = new Faker<VIRTUAL_LAB_API.Model.EducationalMaterial>()
-    //        .RuleFor(i => i.Id, 0)
-    //        .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
-    //        .Generate(3);
+    {
+        var courses = dbContext.Course.ToList();
+        var urls = new List<string> {
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIFcc1kWb9DwiXxmlCbhWasLb6KsZjbrkwuQ&s",
+            "https://i1.sndcdn.com/avatars-bnjyUu0fzWzXD6jM-yyRVpw-t240x240.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZWo_fzp3GiZZVj0OjjEIUwj19-0Pz3-Ig6g&s",
+        };
 
-    //    dbContext.AddRange(items);
-    //    dbContext.SaveChanges();
-    //}
+        var items = new Faker<VIRTUAL_LAB_API.Model.EducationalMaterial>()
+            .RuleFor(i => i.Id, 0)
+            .RuleFor(i => i.Name, f => f.Lorem.Word())
+            .RuleFor(i => i.Description, f => f.Lorem.Text())
+            .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
+            .RuleFor(i => i.CloudDriveAttachedFileURLs, urls)
+            .Generate(3);
 
-    //{
-    //    var courses = dbContext.Course.ToList();
-    //    var students = dbContext.Student.ToList();
-    //    var teachers = dbContext.Teacher.ToList();
-    //    var items = new AutoFaker<VIRTUAL_LAB_API.Model.Task>()
-    //        .RuleFor(i => i.Id, 0)
-    //        .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
-    //        .Generate(3);
+        dbContext.AddRange(items);
+        dbContext.SaveChanges();
+    }
 
-    //    dbContext.AddRange(items);
-    //    dbContext.SaveChanges();
-    //}
+    {
+        var courses = dbContext.Course.ToList();
+
+        var items = new Faker<VIRTUAL_LAB_API.Model.Task>()
+            .RuleFor(i => i.Id, 0)
+            .RuleFor(i => i.Name, f => f.Lorem.Word())
+            .RuleFor(i => i.Description, f => f.Lorem.Text())
+            .RuleFor(i => i.DataJSON, "none")
+            .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
+            .Generate(3);
+
+        dbContext.AddRange(items);
+        dbContext.SaveChanges();
+    }
 
 
 
