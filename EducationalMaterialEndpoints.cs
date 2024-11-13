@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using VIRTUAL_LAB_API.Data;
 using VIRTUAL_LAB_API.Model;
+using Bogus.DataSets;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 namespace VIRTUAL_LAB_API;
 
 public static class EducationalMaterialEndpoints
@@ -45,9 +48,15 @@ public static class EducationalMaterialEndpoints
         .WithName("UpdateEducationalMaterial")
         .WithOpenApi();
 
-        group.MapPost("/", async (EducationalMaterial educationalMaterial, VIRTUAL_LAB_APIContext db) =>
+        group.MapPost("/", async (EducationalMaterial educationalMaterial, [FromQuery(Name = "courseId")] int ? courseId, VIRTUAL_LAB_APIContext db) =>
         {
+            if (courseId != null)
+            {
+                educationalMaterial.CourseId = (int)courseId;
+            }
+
             db.EducationalMaterial.Add(educationalMaterial);
+
             await db.SaveChangesAsync();
             return TypedResults.Created($"/api/EducationalMaterial/{educationalMaterial.Id}",educationalMaterial);
         })

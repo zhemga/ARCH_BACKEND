@@ -4,19 +4,29 @@ using Microsoft.AspNetCore.OpenApi;
 using VIRTUAL_LAB_API.Data;
 using VIRTUAL_LAB_API.Model;
 using Task = VIRTUAL_LAB_API.Model.Task;
+using Microsoft.AspNetCore.Mvc;
+using Bogus.DataSets;
 namespace VIRTUAL_LAB_API;
 
 public static class TaskEndpoints
 {
-    public static void MapTaskEndpoints (this IEndpointRouteBuilder routes)
+    public static void MapTaskEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Task").WithTags(nameof(Task));
 
-        group.MapGet("/", async (VIRTUAL_LAB_APIContext db) =>
+        group.MapGet("/",
+            async ([FromQuery(Name = "courseId")] int? courseId, VIRTUAL_LAB_APIContext db) =>
         {
+            if (courseId != null)
+            {
+                return await db.Task
+                   .Where(model => model.CourseId == courseId)
+                   .ToListAsync();
+            }
+
             return await db.Task.ToListAsync();
         })
-        .WithName("GetAllTasks")
+        .WithName("GetTasks")
         .WithOpenApi();
 
         group.MapGet("/{id}", async Task<Results<Ok<Task>, NotFound>> (int id, VIRTUAL_LAB_APIContext db) =>
@@ -47,11 +57,17 @@ public static class TaskEndpoints
         .WithName("UpdateTask")
         .WithOpenApi();
 
-        group.MapPost("/", async (Task task, VIRTUAL_LAB_APIContext db) =>
+        group.MapPost("/", async (Task task, [FromQuery(Name = "courseId")] int? courseId, VIRTUAL_LAB_APIContext db) =>
         {
+            if (courseId != null)
+            {
+                task.CourseId = (int) courseId;
+            }
+
             db.Task.Add(task);
+
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/Task/{task.Id}",task);
+            return TypedResults.Created($"/api/Task/{task.Id}", task);
         })
         .WithName("CreateTask")
         .WithOpenApi();

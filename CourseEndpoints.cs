@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OpenApi;
 using VIRTUAL_LAB_API.Data;
 using VIRTUAL_LAB_API.Model;
 using Task = VIRTUAL_LAB_API.Model.Task;
+using Microsoft.AspNetCore.Mvc;
 namespace VIRTUAL_LAB_API;
 
 public static class CourseEndpoints
@@ -12,11 +13,26 @@ public static class CourseEndpoints
     {
         var group = routes.MapGroup("/api/Course").WithTags(nameof(Course));
 
-        group.MapGet("/", async (VIRTUAL_LAB_APIContext db) =>
+        group.MapGet("/", async ([FromQuery(Name = "teacherId")] int? teacherId,
+            [FromQuery(Name = "studentId")] int? studentId,
+            VIRTUAL_LAB_APIContext db) =>
         {
+            if (teacherId != null)
+            {
+                return await db.Course
+                    .Where(model => model.Teachers.Select(t => t.Id).ToList().Contains((int) teacherId))
+                    .ToListAsync();
+            }
+            else if (studentId != null)
+            {
+                return await db.Course
+                    .Where(model => model.Students.Select(t => t.Id).ToList().Contains((int)studentId))
+                    .ToListAsync();
+            }
+
             return await db.Course.ToListAsync();
         })
-        .WithName("GetAllCourses")
+        .WithName("GetCourses")
         .WithOpenApi();
 
         group.MapGet("/{id}", async Task<Results<Ok<Course>, NotFound>> (int id, VIRTUAL_LAB_APIContext db) =>
@@ -28,18 +44,6 @@ public static class CourseEndpoints
                     : TypedResults.NotFound();
         })
         .WithName("GetCourseById")
-        .WithOpenApi();
-
-        group.MapGet("GetTasksByCourseId/{id}", async Task<Results<Ok<List<Task>>, NotFound>> (int id, VIRTUAL_LAB_APIContext db) =>
-        {
-            return await db.Task.AsNoTracking()
-                .Where(model => model.CourseId == id)
-                .ToListAsync()
-                is List<Task> model
-                    ? TypedResults.Ok(model)
-                    : TypedResults.NotFound();
-        })
-        .WithName("GetTasksByCourseId")
         .WithOpenApi();
 
         group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Course course, VIRTUAL_LAB_APIContext db) =>
