@@ -170,7 +170,7 @@ using (var scope = app.Services.CreateScope())
             .RuleFor(i => i.Name, f => f.Lorem.Word())
             .RuleFor(i => i.Description, f => f.Lorem.Text())
             .RuleFor(i => i.DataJSON, "none")
-            .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
+            .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)x
             .Generate(3);
 
         dbContext.AddRange(items);

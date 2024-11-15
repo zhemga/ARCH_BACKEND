@@ -20,7 +20,7 @@ public static class CourseEndpoints
             if (teacherId != null)
             {
                 return await db.Course
-                    .Where(model => model.Teachers.Select(t => t.Id).ToList().Contains((int) teacherId))
+                    .Where(model => model.Teachers.Select(t => t.Id).ToList().Contains((int)teacherId))
                     .ToListAsync();
             }
             else if (studentId != null)
@@ -60,8 +60,15 @@ public static class CourseEndpoints
         .WithName("UpdateCourse")
         .WithOpenApi();
 
-        group.MapPost("/", async (Course course, VIRTUAL_LAB_APIContext db) =>
+        group.MapPost("/", async (Course course, [FromQuery(Name = "teacherId")] int? teacherId, VIRTUAL_LAB_APIContext db) =>
         {
+            if (teacherId != null)
+            {
+                var teacherToLink = db.Teacher.Where(t => t.Id == teacherId).FirstOrDefault();
+
+                if (teacherToLink != null)
+                    course.Teachers = new List<Teacher> { teacherToLink };
+            }
             db.Course.Add(course);
             await db.SaveChangesAsync();
             return TypedResults.Created($"/api/Course/{course.Id}", course);
