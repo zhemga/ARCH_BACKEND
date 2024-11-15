@@ -14,8 +14,15 @@ public static class EducationalMaterialEndpoints
     {
         var group = routes.MapGroup("/api/EducationalMaterial").WithTags(nameof(EducationalMaterial));
 
-        group.MapGet("/", async (VIRTUAL_LAB_APIContext db) =>
+        group.MapGet("/", async ([FromQuery(Name = "courseId")] int? courseId, VIRTUAL_LAB_APIContext db) =>
         {
+            if (courseId != null)
+            {
+                return await db.EducationalMaterial
+                   .Where(model => model.CourseId == courseId)
+                   .ToListAsync();
+            }
+
             return await db.EducationalMaterial.ToListAsync();
         })
         .WithName("GetAllEducationalMaterials")
