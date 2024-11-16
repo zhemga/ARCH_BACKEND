@@ -49,6 +49,8 @@ public static class TaskEndpoints
                     .SetProperty(m => m.Name, task.Name)
                     .SetProperty(m => m.Description, task.Description)
                     .SetProperty(m => m.DataJSON, task.DataJSON)
+                    .SetProperty(m => m.MinRate, task.MinRate)
+                    .SetProperty(m => m.MaxRate, task.MaxRate)
                     .SetProperty(m => m.MaxAttempts, task.MaxAttempts)
                     .SetProperty(m => m.CourseId, task.CourseId)
                     );

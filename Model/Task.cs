@@ -13,6 +13,8 @@ namespace VIRTUAL_LAB_API.Model
         [MaxLength(20000)]
         public string DataJSON { get; set; }
         public int MaxAttempts { get; set; }
+        public double MinRate { get; set; }
+        public double MaxRate { get; set; }
 
 
         [ForeignKey(nameof(Course))]

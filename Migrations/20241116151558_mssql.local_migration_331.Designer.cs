@@ -12,8 +12,8 @@ using VIRTUAL_LAB_API.Data;
 namespace VIRTUAL_LAB_API.Migrations
 {
     [DbContext(typeof(VIRTUAL_LAB_APIContext))]
-    [Migration("20241113093430_mssql.local_migration_387")]
-    partial class mssqllocal_migration_387
+    [Migration("20241116151558_mssql.local_migration_331")]
+    partial class mssqllocal_migration_331
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,6 @@ namespace VIRTUAL_LAB_API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -351,6 +348,12 @@ namespace VIRTUAL_LAB_API.Migrations
 
                     b.Property<int>("MaxAttempts")
                         .HasColumnType("int");
+
+                    b.Property<double>("MaxRate")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MinRate")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -46,29 +46,61 @@ public static class CourseEndpoints
         .WithName("GetCourseById")
         .WithOpenApi();
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Course course, VIRTUAL_LAB_APIContext db) =>
+        group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Course course,
+            [FromQuery(Name = "studentId")] int? studentId,
+            VIRTUAL_LAB_APIContext db) =>
         {
-            var affected = await db.Course
+            int affected = 0;
+            var currentCourse = db.Course.Where(m => m.Id == id).First();
+            currentCourse.Students.RemoveAll(s => s.Id == studentId);
+
+            if (studentId != null)
+            {
+                affected = await db.Course
                 .Where(model => model.Id == id)
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(m => m.Id, course.Id)
                     .SetProperty(m => m.Name, course.Name)
                     .SetProperty(m => m.Description, course.Description)
-                    );
+                    .SetProperty(m => m.Students, currentCourse.Students)
+                );
+            }
+            else
+            {
+                affected = await db.Course
+                  .Where(model => model.Id == id)
+                  .ExecuteUpdateAsync(setters => setters
+                      .SetProperty(m => m.Id, course.Id)
+                      .SetProperty(m => m.Name, course.Name)
+                      .SetProperty(m => m.Description, course.Description)
+                      );
+            }
+
+
+
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })
         .WithName("UpdateCourse")
         .WithOpenApi();
 
-        group.MapPost("/", async (Course course, [FromQuery(Name = "teacherId")] int? teacherId, VIRTUAL_LAB_APIContext db) =>
+        group.MapPost("/", async (Course course, [FromQuery(Name = "teacherId")] int? teacherId, [FromQuery(Name = "studentId")] int? studentId, VIRTUAL_LAB_APIContext db) =>
         {
             if (teacherId != null)
             {
                 var teacherToLink = db.Teacher.Where(t => t.Id == teacherId).FirstOrDefault();
 
                 if (teacherToLink != null)
-                    course.Teachers = new List<Teacher> { teacherToLink };
+                    course.Teachers.Add(teacherToLink);
             }
+
+            if (studentId != null)
+            {
+                var studentToLink = db.Student.Where(t => t.Id == studentId).FirstOrDefault();
+
+                if (studentToLink != null)
+                    course.Students.Add(studentToLink);
+            }
+
             db.Course.Add(course);
             await db.SaveChangesAsync();
             return TypedResults.Created($"/api/Course/{course.Id}", course);

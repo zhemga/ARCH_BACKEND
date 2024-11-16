@@ -12,6 +12,7 @@ using Bogus.DataSets;
 using Bogus;
 using System.Diagnostics.Metrics;
 using Newtonsoft.Json;
+using System.Diagnostics;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VIRTUAL_LAB_APIContext>(
 options =>
@@ -170,6 +171,9 @@ using (var scope = app.Services.CreateScope())
             .RuleFor(i => i.Name, f => f.Lorem.Word())
             .RuleFor(i => i.Description, f => f.Lorem.Text())
             .RuleFor(i => i.DataJSON, "none")
+            .RuleFor(i => i.MaxAttempts, f => f.Random.Int(1, 11))
+            .RuleFor(i => i.MinRate, f => f.Random.Double(0.1d, 0.5d))
+            .RuleFor(i => i.MaxRate, f => f.Random.Double(0.8d, 1d))
             .RuleFor(i => i.CourseId, f => f.PickRandom(courses).Id)
             .Generate(3);
 

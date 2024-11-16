@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VIRTUAL_LAB_API.Migrations
 {
     /// <inheritdoc />
-    public partial class mssqllocal_migration_387 : Migration
+    public partial class mssqllocal_migration_331 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -121,6 +121,8 @@ namespace VIRTUAL_LAB_API.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataJSON = table.Column<string>(type: "nvarchar(max)", maxLength: 20000, nullable: false),
                     MaxAttempts = table.Column<int>(type: "int", nullable: false),
+                    MinRate = table.Column<double>(type: "float", nullable: false),
+                    MaxRate = table.Column<double>(type: "float", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -3,16 +3,31 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using VIRTUAL_LAB_API.Data;
 using VIRTUAL_LAB_API.Model;
+using Microsoft.AspNetCore.Mvc;
+using Bogus.DataSets;
 namespace VIRTUAL_LAB_API;
 
 public static class StudentEndpoints
 {
-    public static void MapStudentEndpoints (this IEndpointRouteBuilder routes)
+    public static void MapStudentEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Student").WithTags(nameof(Student));
 
-        group.MapGet("/", async (VIRTUAL_LAB_APIContext db) =>
+        group.MapGet("/", async ([FromQuery(Name = "courseId")] int? courseId,
+            [FromQuery(Name = "inverse")] int? inverse, VIRTUAL_LAB_APIContext db) =>
         {
+            if (courseId != null && (inverse == null || inverse == 0))
+            {
+                return await db.Student.Where(m => m.Courses.Select(c => c.Id).ToList()
+                .Contains((int)courseId)).ToListAsync();
+            }
+            else if (courseId != null && inverse == 1)
+            {
+                return await db.Student.Where(m => !m.Courses.Select(c => c.Id).ToList()
+                    .Contains((int)courseId)).ToListAsync();
+            }
+
+
             return await db.Student.ToListAsync();
         })
         .WithName("GetAllStudents")
@@ -52,7 +67,7 @@ public static class StudentEndpoints
         {
             db.Student.Add(student);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/Student/{student.Id}",student);
+            return TypedResults.Created($"/api/Student/{student.Id}", student);
         })
         .WithName("CreateStudent")
         .WithOpenApi();
